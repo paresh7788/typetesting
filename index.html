@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST YOUR SPEED</title>
+    <style>
+        *{
+            padding: 0; margin: 0; box-sizing: border-box;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .mainDiv{
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background:linear-gradient(to right,rgba(229, 240, 28, 0.995),rgb(136, 237, 48));
+        }
+        .centerDiv{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+
+        }
+        h1{
+            text-transform: capitalize;
+            margin-bottom: 30px;
+            color: #ecf0f1;
+            text-shadow: 1px 2px 3px #2980b9;
+            font-size: 2.1rem;
+        }
+        textarea{
+            background-color: rgb(80, 76, 76);
+            box-shadow: 0 0 1px rgba(0,0,0,0,5);
+            border-radius: 15px 15px 0 0 ;
+            border: 7px solid #36edd2;
+            color: wheat;
+            font-size: 1.3rem;
+        }
+        .mainbtn{
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 5px solid #36edd2;
+            background: #ecf0f1;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainDiv">
+        <div class="centerDiv">
+            <h1>Test your typing speed</h1>
+            <h2 id="msg"> </h2>
+            <br>
+            <textarea name="" id="mywords" cols="100" rows="10" placeholder="All the best buddy !"></textarea>
+            <br>
+            <button id="btn" class="mainbtn">Start</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        const setOfWords=[
+            "My name is paresh singh rajput and am a mca student.",
+            "hope you are liking this typing test web app that i have created.",
+            "i made this web app after completing my frontend basics.",
+            "the great thing about making project is , it enhance your idea and vision on that particular field.",
+            "am currently studying at Fakir Mohan University , Balasore.",
+            "Welcome to my type speed testing web app. ",
+            "hope you have a graet day."
+        ];
+        const msg=document.getElementById('msg');
+        const typeWords=document.getElementById('mywords');
+        const btn=document.getElementById('btn');
+        let startTime,endTime;
+
+     const playGame = () =>{
+            let randomNumber=Math.floor(Math.random()*setOfWords.length);
+            msg.innerText=setOfWords[randomNumber];
+            let date=new Date();
+            startTime=date.getTime();
+            btn.innerText="Done";
+        }
+        const endPlay = () =>{
+            let date=new Date();
+            endTime=date.getTime();
+            let totalTime=((endTime-startTime)/1000);
+            console.log(totalTime);
+
+            let totalstr=typeWords.value;
+            let wordCount=wordCounter(totalstr);
+
+            let speed=Math.round((wordCount / totalTime)*60);
+            let finalMsg="Your Speed is " +speed+ " words per minutes ";
+            
+            finalMsg += comparewords(msg.innerText,totalstr);
+
+
+            msg.innerText=finalMsg;
+        }
+
+        const wordCounter = (str) =>{
+            let response=str.split(" ").length;
+            console.log(response);
+            return response;
+        }
+        const comparewords = (str1 , str2) =>{
+            let words1 = str1.split(" ");
+            let words2 = str2.split(" ");
+            let cnt=0;
+
+            // arrayName then foreach then it will take whole function with value and index no of that arrray 
+
+            words1.forEach(function (item,index)
+            {
+                if (item==words2[index]){
+                    cnt++;
+                }
+            })
+
+            let errorWords = (words1.length - cnt);
+            return (cnt+ " corect out of "+words1.length+" words and the total no of error are" +errorWords+".");
+
+        }
+
+
+
+
+
+
+        btn.addEventListener('click',function(){
+            if(this.innerText=='Start'){
+                typeWords.disabled=false;
+                playGame();
+            }
+            else if(this.innerText=="Done"){
+                typeWords.disabled=true;
+                btn.innerText="Start";
+                endPlay();
+
+            }
+        })
+
+
+
+    </script>
+
+    
+</body>
+</html>
